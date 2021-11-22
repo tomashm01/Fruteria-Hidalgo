@@ -4,7 +4,7 @@ Aplicación que se encarga de gestionar una frutería para dar de alta a cliente
 ## Base de datos
 
 En la siguiente imagen se muestra el diagrama entidad-relación de la base de datos usada en esta aplicación:
-![Modelo entidad-relacional](/src/img/DiagramaER.png)
+![Modelo entidad-relacional](/src/img/Diagrama.png)
 
 Para ello voy a comentar a continuación acerca de cada entidad creada:
 * Fruta: tipo de fruta disponible para la venta
