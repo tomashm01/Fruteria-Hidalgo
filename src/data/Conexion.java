@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Conexion {
 	
-	private final String URL="jdbc:mysql://localhost:3306/hlc";
+	private final String URL="jdbc:mysql://localhost:3306/Fruteria Hidalgo";
 	private final String USER="root";
 	private final String PASSWD="";
 

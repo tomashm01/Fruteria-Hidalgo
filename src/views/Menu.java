@@ -1,12 +1,12 @@
 package views;
 
-import java.sql.Connection;
+import java.sql.SQLException;
 
-import data.Conexion;
+import data.DAO.PersonaDAO;
+import data.Entities.Persona;
 
 public class Menu {
-    public static void main(String[] args) {
-		
+    public static void main(String[] args) throws SQLException {
 		
 	}
 }

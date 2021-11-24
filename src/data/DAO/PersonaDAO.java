@@ -10,29 +10,38 @@ import data.Entities.Persona;
 
 public class PersonaDAO implements DAO<Persona,String>{
 
-	final Conexion c=new Conexion();
-	final Connection myConexion=c.conectar();
+	static final Conexion con= new Conexion();
+	static final Connection c=con.conectar();	
 	
-	
-	
-	@Override
 	public boolean insertar(Persona persona) throws SQLException {
-		PreparedStatement statement = myConexion.prepareStatement("INSERT INTO Persona values (?,?,?,?)");
+		PreparedStatement statement = c.prepareStatement("INSERT INTO Persona values (?,?,?,?)");
+		statement.setString(1, persona.getDni());
+		statement.setString(2, persona.getNombre());
+		statement.setString(3, persona.getEmail());
+		statement.setString(4, persona.getRol());
+		
+		if(statement.executeUpdate()!=1) return false;
+		return true;
+	}
+
+	public boolean modificar(Persona persona) throws SQLException {
+		PreparedStatement statement = c.prepareStatement("UPDATE Persona SET nombreCompleto=? , email=? , rol=? where dni=?");
+		statement.setString(1, persona.getNombre());
+		statement.setString(2, persona.getEmail());
+		statement.setString(3, persona.getRol());
+		statement.setString(4, persona.getDni());
+		
+		if(statement.executeUpdate()!=1) return false;
+		return true;
+	}
+
+	@Override
+	public boolean eliminar(Persona persona) throws SQLException {
+		PreparedStatement statement = c.prepareStatement("DELETE FROM Persona WHERE dni=?");
 		statement.setString(1, persona.getDni());
 		
-		return false;
-	}
-
-	@Override
-	public boolean modificar(Persona a) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean eliminar(Persona a) {
-		// TODO Auto-generated method stub
-		return false;
+		if(statement.executeUpdate()!=1) return false;
+		return true;
 	}
 
 	@Override
