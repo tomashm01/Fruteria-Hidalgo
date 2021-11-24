@@ -1,16 +1,20 @@
 package data.DTO;
 
+import java.util.List;
+
+import data.Entities.Persona;
+
 public class PersonaDTO {
 	private String dni;
 	private String nombre;
 	private String email;
 	private String rol;
 	
-	public PersonaDTO(String dni,String nombre,String email,String rol) {
-		setDni(dni);
-		setEmail(email);
-		setNombre(nombre);
-		setRol(rol);
+	public PersonaDTO(Persona persona) {
+		setDni(persona.getDni());
+		setEmail(persona.getEmail());
+		setNombre(persona.getNombre());
+		setRol(persona.getRol());
 	}
 	
 	public String getDni() {

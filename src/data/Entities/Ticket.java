@@ -12,7 +12,7 @@ public class Ticket {
 	private Fruta tipoFruta;
 	private static List<Ticket> listaTickets;
 
-	public Ticket(int id, float precioTotal, Date fecha, Persona tipoPersona, Fruta tipoFruta) {
+	public Ticket(int id, Persona tipoPersona, Fruta tipoFruta,float precioTotal, Date fecha) {
 		setId(id);
 		setPrecioTotal(precioTotal);
 		setTipoFruta(tipoFruta);
