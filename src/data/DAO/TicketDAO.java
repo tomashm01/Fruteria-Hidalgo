@@ -1,0 +1,72 @@
+package data.DAO;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import data.Conexion;
+import data.DTO.FrutaDTO;
+import data.DTO.TicketDTO;
+
+public class TicketDAO implements DAO<TicketDTO,Integer>{
+	static final Conexion con= new Conexion();
+	static final Connection c=con.conectar();
+	
+	public boolean insertar(TicketDTO t) throws SQLException {
+		PreparedStatement statement = c.prepareStatement("INSERT INTO Ticket values (null,?,?,?,?);");
+		statement.setInt(1, t.getIdPersona());
+		statement.setInt(2, t.getIdFrutas());
+		statement.setDate(3, t.getFecha());
+		statement.setFloat(4, t.getPrecioTotal());
+		
+		if(statement.executeUpdate()!=1) return false;
+		return true;
+	}
+
+	public boolean modificar(TicketDTO t) throws SQLException {
+		PreparedStatement statement = c.prepareStatement("UPDATE Ticket SET idPersona=? , idFrutas=?, fecha=?, precioTotal=? where id=?;");
+		statement.setInt(1, t.getIdPersona());
+		statement.setInt(2, t.getIdFrutas());
+		statement.setDate(3, t.getFecha());
+		statement.setFloat(4, t.getPrecioTotal());
+		statement.setInt(5, t.getId());
+		
+		if(statement.executeUpdate()!=1) return false;
+		return true;
+	}
+
+
+	public boolean eliminar(TicketDTO t) throws SQLException {
+		PreparedStatement statement = c.prepareStatement("DELETE FROM Ticket WHERE id=?;");
+		statement.setInt(1, t.getId());
+
+		if(statement.executeUpdate()!=1) return false;
+		return true;
+	}
+
+	public List<TicketDTO> obtenerTodos() throws SQLException {
+		PreparedStatement statement = c.prepareStatement("SELECT * FROM Fruta;");
+		List<TicketDTO> lista=null;
+		ResultSet rs=statement.executeQuery();
+		while(rs.next()) {
+			lista.add(new TicketDTO(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal")));
+		}
+		return lista;
+	}
+
+
+	public TicketDTO obtenerUno(Integer id) throws SQLException {
+		PreparedStatement statement = c.prepareStatement("SELECT * FROM Ticket where id=?;");
+		statement.setInt(1, id);
+		ResultSet rs=statement.executeQuery();
+		
+		if(rs.next()) {
+			return new TicketDTO(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal"));
+		}
+		return null;
+		
+	}
+
+}
