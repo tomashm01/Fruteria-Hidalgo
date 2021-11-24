@@ -8,7 +8,7 @@ public class Fruta {
 	private String nombre;
 	private int cantidad;
 	private float precioUnidad;
-	private List<Fruta> listaFrutas;
+	private static List<Fruta> listaFrutas;
 	
 	
 	public Fruta(int id,String nombre,int cantidad,float precioUnidad) {
@@ -17,47 +17,7 @@ public class Fruta {
 		setNombre(nombre);
 		setPrecioUnidad(precioUnidad);
 	}
-	
-	public boolean addFrutaToList(Fruta frutaNueva) {
-		if (frutaNueva.getCantidad()>0 && frutaNueva.getNombre()!=null && frutaNueva.getPrecioUnidad()>0) {
-			listaFrutas.add(frutaNueva);
-			return true;
-		}
-		return false;
-	}
 
-	public boolean removeFrutaByID(int id) {
-		for (int i = 0; i < listaFrutas.size(); i++) {
-			if (listaFrutas.get(i).getId()==id) {
-				listaFrutas.remove(i);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public boolean changeFruta(Fruta frutaCambiada) {
-		for (int posicion = 0; posicion < listaFrutas.size(); posicion++) {
-			if (listaFrutas.get(posicion).getId()==frutaCambiada.getId()){
-				listaFrutas.add(posicion, frutaCambiada);
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public List<Fruta> showFrutas(){
-		return listaFrutas;
-	}
-
-	public Fruta showFrutaByID(int id) {
-		for(int i=0;i<listaFrutas.size();i++) {
-			if(listaFrutas.get(i).getId()==id){
-				return listaFrutas.get(i);
-			}
-		}
-		return null;
-	}
 	public int getId() {
 		return id;
 	}

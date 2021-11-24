@@ -7,6 +7,6 @@ public interface DAO<T,K> {
 	boolean insertar(T a) throws SQLException;
 	boolean modificar(T a)throws SQLException;
 	boolean eliminar(T a)throws SQLException;
-	List<T>getTodos()throws SQLException;
-	T obtener(K id)throws SQLException;
+	List<T>obtenerTodos()throws SQLException;
+	T obtenerUno(K id)throws SQLException;
 }

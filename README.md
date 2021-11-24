@@ -8,5 +8,6 @@ En la siguiente imagen se muestra el diagrama entidad-relación de la base de da
 
 Para ello voy a comentar a continuación acerca de cada entidad creada:
 * Fruta: tipo de fruta disponible para la venta
-* Persona: según el tipo de rol tiene permiso para realizar una tarea determinada. Si es comprador solo puede comprar fruta, si es vendedor solamente puede vender fruta al propietario y si es propietario puede realizar la alta y baja tanto de propietarios como vendedores y compradores.
-* Ticket: ticket generado en una transacción de compra-venta de fruta.
+* Persona: según el tipo de rol puede ser administrador(puede incluir fruta nueva) o comprador(solo puede retirar fruta)
+* Ticket: ticket generado en una transacción de compra de fruta.
+* FrutasTicket: es una tabla débil, generada principalmente para gestionar la cantidad de frutas que se han comprado en un pedido
