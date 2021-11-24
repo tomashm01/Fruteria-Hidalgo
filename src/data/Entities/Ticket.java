@@ -1,7 +1,6 @@
 package data.Entities;
 
 import java.sql.Date;
-import java.util.List;
 
 public class Ticket {
 
@@ -10,7 +9,6 @@ public class Ticket {
 	private Date fecha;
 	private int idPersona;
 	private int idFrutas;
-	private static List<Ticket> listaTickets;
 
 	public Ticket(int id,int idPersona,int idFrutas, Date fecha,float precioTotal) {
 		setId(id);

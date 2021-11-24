@@ -1,13 +1,10 @@
 package data.DTO;
-
-import java.util.List;
 import data.Entities.Persona;
 
 public class PersonaDTO {
-	private int id;
+	private Integer id;
 	private String nombre;
 	private String rol;
-	private static List<PersonaDTO> listaPersonas;
 
 	public PersonaDTO(Persona p) {
 		this.id=p.getID();
@@ -15,13 +12,13 @@ public class PersonaDTO {
 		setRol(p.getRol());
 	}
 	
-	public PersonaDTO(int id, String nombre, String rol) {
+	public PersonaDTO(Integer id, String nombre, String rol) {
 		this.id=id;
 		setNombre(nombre);
 		setRol(rol);
 	}
 
-	public int getID() {
+	public Integer getID() {
 		return id;
 	}
 

@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import data.Conexion;
 import data.DTO.FrutaDTO;
+import data.DTO.PersonaDTO;
 
 public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	static final Conexion con= new Conexion();
@@ -41,9 +43,9 @@ public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 		return true;
 	}
 
-	public List<FrutaDTO> obtenerTodos() throws SQLException {
+	public ArrayList<FrutaDTO> obtenerTodos() throws SQLException {
 		PreparedStatement statement = c.prepareStatement("SELECT * FROM Fruta;");
-		List<FrutaDTO> lista=null;
+		ArrayList<FrutaDTO> lista=new ArrayList<FrutaDTO>();
 		ResultSet rs=statement.executeQuery();
 		while(rs.next()) {
 			lista.add(new FrutaDTO(rs.getInt("id"),rs.getString("nombre"),rs.getInt("cantidad"),rs.getFloat("precioUnidad")));

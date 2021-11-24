@@ -1,14 +1,11 @@
 package data.Entities;
 
-import java.util.List;
-
 public class Fruta {
 
 	private int id;
 	private String nombre;
 	private int cantidad;
 	private float precioUnidad;
-	private static List<Fruta> listaFrutas;
 	
 	
 	public Fruta(int id,String nombre,int cantidad,float precioUnidad) {

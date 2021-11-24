@@ -1,12 +1,9 @@
 package data.Entities;
 
-import java.util.List;
-
 public class FrutasTicket {
 	private int id;
 	private int idTicket;
 	private int idFruta;
-	private static List<FrutasTicket> listaFrutasTicket;
 	
 	public FrutasTicket(int id,int idTicket,int idFruta) {
 		setId(id);

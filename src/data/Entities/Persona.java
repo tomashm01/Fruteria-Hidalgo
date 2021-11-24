@@ -1,14 +1,9 @@
 package data.Entities;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class Persona {
-	private int id;
+	private Integer id;
 	private String nombre;
 	private String rol;
-	private static List<Persona> listaPersonas;
 
 	public Persona(int id, String nombre, String rol) {
 		this.id=id;
@@ -16,7 +11,7 @@ public class Persona {
 		setRol(rol);
 	}
 
-	public int getID() {
+	public Integer getID() {
 		return id;
 	}
 

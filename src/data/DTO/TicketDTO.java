@@ -1,7 +1,6 @@
 package data.DTO;
 
 import java.sql.Date;
-import java.util.List;
 import data.Entities.Ticket;
 
 public class TicketDTO {
@@ -11,7 +10,6 @@ public class TicketDTO {
 	private Date fecha;
 	private int idPersona;
 	private int idFrutas;
-	private static List<TicketDTO> listaTickets;
 
 	public TicketDTO(Ticket t) {
 		setId(t.getId());

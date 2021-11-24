@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 import data.Conexion;
 import data.DTO.PersonaDTO;
@@ -40,9 +40,9 @@ public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 		return true;
 	}
 
-	public List<PersonaDTO> obtenerTodos() throws SQLException {
+	public ArrayList<PersonaDTO> obtenerTodos() throws SQLException {
 		PreparedStatement statement = c.prepareStatement("SELECT * FROM Persona;");
-		List<PersonaDTO> lista=null;
+		ArrayList<PersonaDTO> lista = new ArrayList<PersonaDTO>();
 		ResultSet rs=statement.executeQuery();
 		while(rs.next()) {
 			lista.add(new PersonaDTO(rs.getInt("id"),rs.getString("nombre"),rs.getString("rol")));

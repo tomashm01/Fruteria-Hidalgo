@@ -1,7 +1,5 @@
 package data.DTO;
 
-import java.util.List;
-
 import data.Entities.Fruta;
 
 public class FrutaDTO {
@@ -10,7 +8,6 @@ public class FrutaDTO {
 	private String nombre;
 	private int cantidad;
 	private float precioUnidad;
-	private static List<FrutaDTO> listaFrutas;
 	
 	public FrutaDTO(Fruta fruta) {
 		setId(fruta.getId());

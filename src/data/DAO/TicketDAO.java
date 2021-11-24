@@ -4,11 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import data.Conexion;
 import data.DTO.FrutaDTO;
 import data.DTO.TicketDTO;
+import data.Entities.Fruta;
 
 public class TicketDAO implements DAO<TicketDTO,Integer>{
 	static final Conexion con= new Conexion();
@@ -46,9 +48,9 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 		return true;
 	}
 
-	public List<TicketDTO> obtenerTodos() throws SQLException {
+	public ArrayList<TicketDTO> obtenerTodos() throws SQLException {
 		PreparedStatement statement = c.prepareStatement("SELECT * FROM Fruta;");
-		List<TicketDTO> lista=null;
+		ArrayList<TicketDTO> lista=new ArrayList<TicketDTO>();
 		ResultSet rs=statement.executeQuery();
 		while(rs.next()) {
 			lista.add(new TicketDTO(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal")));
