@@ -5,7 +5,7 @@ import data.Entities.Ticket;
 
 public class TicketDTO {
 
-	private int id;
+	private Integer id;
 	private float PrecioTotal;
 	private Date fecha;
 	private int idPersona;
@@ -19,7 +19,7 @@ public class TicketDTO {
 		setFecha(t.getFecha());
 	}
 	
-	public TicketDTO(int id,int idPersona,int idFrutas, Date fecha,float precioTotal) {
+	public TicketDTO(Integer id,int idPersona,int idFrutas, Date fecha,float precioTotal) {
 		setId(id);
 		this.idPersona=idPersona;
 		this.idFrutas=idFrutas;
@@ -27,11 +27,11 @@ public class TicketDTO {
 		setFecha(fecha);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

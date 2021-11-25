@@ -13,6 +13,10 @@ public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 	static final Conexion con= new Conexion();
 	static final Connection c=con.conectar();
 	
+	public PersonaDAO() {
+		
+	}
+	
 	public boolean insertar(PersonaDTO p) throws SQLException {
 		PreparedStatement statement = c.prepareStatement("INSERT INTO Persona values (null,?,?);");
 		statement.setString(1, p.getNombre());

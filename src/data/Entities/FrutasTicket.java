@@ -1,32 +1,32 @@
 package data.Entities;
 
 public class FrutasTicket {
-	private int id;
-	private int idTicket;
-	private int idFruta;
+	private Integer id;
+	private Integer idTicket;
+	private Integer idFruta;
 	
-	public FrutasTicket(int id,int idTicket,int idFruta) {
+	public FrutasTicket(Integer id,Integer idTicket,Integer idFruta) {
 		setId(id);
 		setIdFruta(idFruta);
 		setIdTicket(idTicket);
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getIdTicket() {
+	public Integer getIdTicket() {
 		return idTicket;
 	}
-	public void setIdTicket(int idTicket) {
+	public void setIdTicket(Integer idTicket) {
 		this.idTicket = idTicket;
 	}
-	public int getIdFruta() {
+	public Integer getIdFruta() {
 		return idFruta;
 	}
-	public void setIdFruta(int idFruta) {
+	public void setIdFruta(Integer idFruta) {
 		this.idFruta = idFruta;
 	}
 	

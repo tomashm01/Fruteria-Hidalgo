@@ -4,13 +4,13 @@ import java.sql.Date;
 
 public class Ticket {
 
-	private int id;
+	private Integer id;
 	private float PrecioTotal;
 	private Date fecha;
 	private int idPersona;
 	private int idFrutas;
 
-	public Ticket(int id,int idPersona,int idFrutas, Date fecha,float precioTotal) {
+	public Ticket(Integer id,int idPersona,int idFrutas, Date fecha,float precioTotal) {
 		setId(id);
 		this.idPersona=idPersona;
 		this.idFrutas=idFrutas;
@@ -18,11 +18,11 @@ public class Ticket {
 		setFecha(fecha);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

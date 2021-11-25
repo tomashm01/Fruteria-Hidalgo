@@ -5,21 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 import data.Conexion;
-import data.DTO.FrutaDTO;
+import data.DTO.FrutasTicketDTO;
 import data.DTO.TicketDTO;
-import data.Entities.Fruta;
+import views.Menu;
 
 public class TicketDAO implements DAO<TicketDTO,Integer>{
 	static final Conexion con= new Conexion();
 	static final Connection c=con.conectar();
 	
+	public TicketDAO() {
+		
+	}
+	
 	public boolean insertar(TicketDTO t) throws SQLException {
+	
 		PreparedStatement statement = c.prepareStatement("INSERT INTO Ticket values (null,?,?,?,?);");
 		statement.setInt(1, t.getIdPersona());
-		statement.setInt(2, t.getIdFrutas());
+		statement.setInt(2, Menu.getFrutaTicket()+1);
 		statement.setDate(3, t.getFecha());
 		statement.setFloat(4, t.getPrecioTotal());
 		
@@ -49,7 +53,7 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 	}
 
 	public ArrayList<TicketDTO> obtenerTodos() throws SQLException {
-		PreparedStatement statement = c.prepareStatement("SELECT * FROM Fruta;");
+		PreparedStatement statement = c.prepareStatement("SELECT * FROM Ticket;");
 		ArrayList<TicketDTO> lista=new ArrayList<TicketDTO>();
 		ResultSet rs=statement.executeQuery();
 		while(rs.next()) {

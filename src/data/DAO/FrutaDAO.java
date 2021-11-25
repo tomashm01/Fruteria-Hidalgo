@@ -5,15 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import data.Conexion;
 import data.DTO.FrutaDTO;
-import data.DTO.PersonaDTO;
 
 public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	static final Conexion con= new Conexion();
 	static final Connection c=con.conectar();
+	
+	public FrutaDAO() {
+		
+	}
 	
 	public boolean insertar(FrutaDTO f) throws SQLException {
 		PreparedStatement statement = c.prepareStatement("INSERT INTO Fruta values (null,?,?,?);");
