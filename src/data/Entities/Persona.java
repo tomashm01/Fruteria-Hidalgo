@@ -34,5 +34,4 @@ public class Persona {
 			this.rol = null;
 		}
 	}
-
 }

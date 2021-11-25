@@ -29,5 +29,4 @@ public class FrutasTicket {
 	public void setIdFruta(Integer idFruta) {
 		this.idFruta = idFruta;
 	}
-	
 }

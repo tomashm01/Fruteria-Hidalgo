@@ -39,6 +39,4 @@ public class Fruta {
 	public void setPrecioUnidad(float precioUnidad) {
 		this.precioUnidad = precioUnidad;
 	}
-	
-	
 }

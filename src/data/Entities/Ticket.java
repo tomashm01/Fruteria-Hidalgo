@@ -49,5 +49,4 @@ public class Ticket {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-
 }
