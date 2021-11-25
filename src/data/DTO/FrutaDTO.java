@@ -4,7 +4,7 @@ import data.Entities.Fruta;
 
 public class FrutaDTO {
 
-	private int id;
+	private Integer id;
 	private String nombre;
 	private int cantidad;
 	private float precioUnidad;
@@ -23,11 +23,11 @@ public class FrutaDTO {
 		setPrecioUnidad(precioUnidad);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -56,7 +56,7 @@ public class FrutaDTO {
 	}
 
 	public String toString() {
-		return this.getId() + "." + this.getNombre() + ". Cantidad: " + this.getCantidad() + ". Precio/Unidad: "
+		return this.getId() + "." + this.getNombre() + ". CANTIDAD: " + this.getCantidad() + ". PRECIO/UNIDAD: "
 				+ this.getPrecioUnidad() + "\n";
 	}
 }

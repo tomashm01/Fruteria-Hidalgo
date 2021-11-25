@@ -41,5 +41,9 @@ public class PersonaDTO {
 			this.rol = null;
 		}
 	}
+	
+	public String toString() {
+		return this.id+". NOMBRE: "+this.nombre+". ROL: "+this.rol+"\n";
+	}
 
 }

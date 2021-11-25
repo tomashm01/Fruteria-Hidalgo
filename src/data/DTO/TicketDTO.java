@@ -58,5 +58,9 @@ public class TicketDTO {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	
+	public String toString() {
+		return this.id+". FECHA: "+this.fecha+". PRECIO TOTAL: "+this.PrecioTotal+". ID USUARIO: "+this.idPersona+"\n";
+	}
 
 }

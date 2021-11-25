@@ -38,9 +38,9 @@ public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 		return true;
 	}
 
-	public boolean eliminar(FrutasTicketDTO f) throws SQLException {
+	public boolean eliminar(Integer id) throws SQLException {
 		PreparedStatement statement = c.prepareStatement("DELETE FROM FrutasTicket WHERE id=?;");
-		statement.setInt(1, f.getId());
+		statement.setInt(1, id);
 
 		if(statement.executeUpdate()!=1) return false;
 		return true;

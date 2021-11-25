@@ -19,8 +19,8 @@ import data.DTO.TicketDTO;
 public class Menu {
 	static Scanner s = new Scanner(System.in);
 	static boolean bandera = false;
-	static final Conexion con= new Conexion();
-	static final Connection c=con.conectar();
+	static final Conexion con = new Conexion();
+	static final Connection c = con.conectar();
 	static ArrayList<PersonaDTO> listaPersonas = new ArrayList<PersonaDTO>();
 	static ArrayList<TicketDTO> listaTicket = new ArrayList<TicketDTO>();
 	static ArrayList<FrutaDTO> listaFrutas = new ArrayList<FrutaDTO>();
@@ -34,37 +34,45 @@ public class Menu {
 		TicketDAO ticketDAO = new TicketDAO();
 		FrutasTicketDAO ftDAO = new FrutasTicketDAO();
 		int opcion = 100;
-		int numFrutasComprar=0;
+		int numFrutasComprar = 0;
 		Date fecha = new Date(System.currentTimeMillis());
 		Integer id = null;
-		Integer idTicket=null;
-		Integer idFrutasTicket=null;
+		Integer idTicket = null;
+		Integer idFrutasTicket = null;
 		Integer cantidadFruta = null;
-		float precioFinal=0;
+		float precioFinal = 0;
 		PersonaDTO persona = null;
 		TicketDTO ticket = null;
 		FrutaDTO fruta = null;
 		FrutasTicketDTO ft = null;
+		
 		do { // MENU INICIO SESION
+			
 			opcion = primerMenu();
 			switch (opcion) {
 			case 0: // SALIR
+				
 				System.out.println("Hasta luego!");
 				bandera = true;
+				
 				break;
 			case 1: // INICIO SESION
+				
 				id = iniciarSesion();
 				listaPersonas = personaDAO.obtenerTodos();
 				if (existeUsuario(id)) {
+					
 					System.out.println("Login correcto");
-					precioFinal=0;
-					persona=personaDAO.obtenerUno(id);
+					precioFinal = 0;
+					persona = personaDAO.obtenerUno(id);
+					
 					bandera = true;
 				} else {
 					System.out.println("Login incorrecto");
 				}
 				break;
 			case 2: // Registro usuario
+				
 				String nombre = registrarSesion();
 				persona = new PersonaDTO(null, nombre, "Comprador");
 				listaPersonas = personaDAO.obtenerTodos();
@@ -72,8 +80,10 @@ public class Menu {
 				if (personaDAO.insertar(persona)) {
 					listaPersonas = personaDAO.obtenerTodos();
 					persona = personaDAO.obtenerUno(listaPersonas.size());
+					
 					id = persona.getID();
 					rol = persona.getRol();
+					
 					bandera = true;
 					System.out.println("Usuario con ID" + id);
 				} else {
@@ -86,70 +96,252 @@ public class Menu {
 
 		if (rol.equals("Comprador")) { // MENU LOGIN COMPRADOR
 			do {
-				actualizarListas(frutaDAO,ftDAO,ticketDAO,personaDAO);
+				actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 				opcion = opcionMenuComprador();
+
 				switch (opcion) {
-				case 0:
+
+				case 0:// SALIR
+					
 					System.out.println("Hasta luego!");
 					bandera = true;
+					
 					break;
-				case 1:// Añadir fruta al ticket
+
+				case 1:// AÑADIR FRUTA AL TICKET
+					
 					System.out.println("Selecciona ID de la fruta: ");
-					id=s.nextInt();
+					id = s.nextInt();
 					s.nextLine();
+					
 					System.out.println("Selecciona numero de unidades: ");
-					cantidadFruta=s.nextInt();
+					cantidadFruta = s.nextInt();
 					s.nextLine();
-					
-					//Actualizar listas
-					if((listaFrutasTicket.size()!=0 && listaTicket.size()!=0)) {
-						idFrutasTicket=listaFrutasTicket.get(listaFrutasTicket.size()-1).getId()+1;
-						idTicket=listaTicket.get(listaTicket.size()-1).getId()+1;
-					}else {
-						idFrutasTicket=1;
-						idTicket=1;
+
+					// Actualizar listas
+					if ((listaFrutasTicket.size() != 0 && listaTicket.size() != 0)) {
+						idFrutasTicket = listaFrutasTicket.get(listaFrutasTicket.size() - 1).getId() + 1;
+						idTicket = listaTicket.get(listaTicket.size() - 1).getId() + 1;
+					} else {
+						idFrutasTicket = 1;
+						idTicket = 1;
 					}
-					
-					if((fruta=frutaDAO.obtenerUno(id))!=null) {//Existe fruta
-						if((fruta.getCantidad()-cantidadFruta)>0) { //Hay cantidad suficiente
-							ftDAO.insertar(new FrutasTicketDTO(idFrutasTicket,idTicket,fruta.getId()));
-							frutaDAO.modificar(new FrutaDTO(fruta.getId(),fruta.getNombre(),fruta.getCantidad()-cantidadFruta,fruta.getPrecioUnidad()));
-							precioFinal+=(cantidadFruta*fruta.getPrecioUnidad());
-						}else {
+
+					if ((fruta = frutaDAO.obtenerUno(id)) != null) {// Existe fruta
+						if ((fruta.getCantidad() - cantidadFruta) > 0) { // Hay cantidad suficiente
+							ftDAO.insertar(new FrutasTicketDTO(idFrutasTicket, idTicket, fruta.getId()));
+							frutaDAO.modificar(new FrutaDTO(fruta.getId(), fruta.getNombre(),
+									fruta.getCantidad() - cantidadFruta, fruta.getPrecioUnidad()));
+							precioFinal += (cantidadFruta * fruta.getPrecioUnidad());
+						} else {
 							System.out.println("No queda dicha cantidad ");
 						}
-					}else {
+					} else {
 						System.out.println("No existe dicho ID de fruta");
 					}
-					
+
 					break;
+
 				case 2: // Mostrar todas las frutas
+					
 					listaFrutas = frutaDAO.obtenerTodos();
 					for (int i = 0; i < listaFrutas.size(); i++) {
 						System.out.println(listaFrutas.get(i).toString());
 					}
+					
 					break;
 				}
 			} while (!bandera);
-			ticketDAO.insertar(new TicketDTO(idTicket,persona.getID(),idFrutasTicket,fecha,precioFinal));
+
+			ticketDAO.insertar(new TicketDTO(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal));
 		} else if (rol.equals("Admin")) { // MENU LOGIN ADMIN
-			System.out.println("admin");
+			do {
+				actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
+				opcion = opcionMenuAdmin();
+
+				switch (opcion) {
+
+				case 0: // SALIR
+					
+					System.out.println("Hasta luego!");
+					bandera = true;
+					
+					break;
+
+				case 1:// MOSTRAR TICKETS
+					
+					for (int i = 0; i < listaTicket.size(); i++) {
+						System.out.println(listaTicket.get(i).toString());
+					}
+					
+					break;
+					
+				case 2://MOSTRAR USUARIOS
+					
+					for(int i=0;i<listaPersonas.size();i++) {
+						System.out.println(listaPersonas.get(i).toString());
+					}
+					
+					break;
+					
+				case 3: //MOSTRAR TODAS FRUTAS
+					
+					for(int i=0;i<listaFrutas.size();i++) {
+						System.out.println(listaFrutas.get(i).toString());
+					}
+					
+					break;
+					
+				case 4: //MOSTRAR USUARIO POR ID
+					
+					System.out.println("Inserta ID del usuario: ");
+					id=s.nextInt();
+					s.nextLine();
+					
+					persona=personaDAO.obtenerUno(id);
+					System.out.println(persona.toString());
+					
+					break;
+					
+				case 5://ELIMINAR USUARIO
+					
+					System.out.println("Inserta ID del usuario: ");
+					id=s.nextInt();
+					s.nextLine();
+			
+					if(personaDAO.eliminar(id)){
+						System.out.println("Persona eliminada correctamente");
+					}else {
+						System.out.println("No se ha eliminado");
+					}
+					break;
+					
+				case 6: //AÑADIR NUEVO USUARIO
+					
+					persona=newUsuario();
+					
+					if(personaDAO.insertar(persona)) {
+						System.out.println("Persona correctamente insertada");
+					}else {
+						System.out.println("Persona no insertada");
+					}
+					break;
+				
+				case 7:	//AÑADIR NUEVA FRUTA
+					
+					fruta=newFruta();
+					
+					if(frutaDAO.insertar(fruta)) {
+						System.out.println("Fruta correctamente insertada");
+					}else {
+						System.out.println("Fruta no insertada");
+					}
+					break;
+				
+				case 8://MODIFICAR FRUTA
+					
+					boolean modificar=false;
+					fruta=modificarFruta();
+					
+					for(int i=0;i<listaFrutas.size();i++) {
+						if(listaFrutas.get(i).getId()==fruta.getId()) {
+							modificar=true;
+						}
+					}
+					
+					if(frutaDAO.modificar(fruta) && modificar) {
+						System.out.println("Fruta modificada correctamente");
+					}else {
+						System.out.println("Fruta no modificada correctamente");
+					}
+					
+					break;
+				
+				case 9://ELIMINAR FRUTA
+					
+					System.out.println("Inserta ID de la fruta: ");
+					id=s.nextInt();
+					s.nextLine();
+					
+					if(frutaDAO.eliminar(id)) {
+						System.out.println("Fruta eliminada correctamente");
+					}else {
+						System.out.println("Fruta no eliminada");
+					}
+					
+					break;
+				
+				}
+			} while (!bandera);
 		}
-		
-		
+
 	}
 
+	private static FrutaDTO modificarFruta() {
+		System.out.println("Introduce ID de la fruta: ");
+		Integer id=s.nextInt();
+		s.nextLine();
+		System.out.println("Introduce su nombre: ");
+		String nombre=s.nextLine();
+		System.out.println("Introduce su cantidad: ");
+		Integer cantidad=s.nextInt();
+		s.nextLine();
+		System.out.println("Introduce el precio por unidad: ");
+		float precioUnidad=s.nextFloat();
+		
+		return new FrutaDTO(id,nombre,cantidad,precioUnidad);
+	}
+
+	private static FrutaDTO newFruta() {
+		
+		System.out.println("Introduce su nombre: ");
+		String nombre=s.nextLine();
+		System.out.println("Introduce su cantidad: ");
+		Integer cantidad=s.nextInt();
+		s.nextLine();
+		System.out.println("Introduce el precio por unidad: ");
+		float precioUnidad=s.nextFloat();
+		
+		return new FrutaDTO(null,nombre,cantidad,precioUnidad);
+	}
+
+	private static PersonaDTO newUsuario() {
+		System.out.println("Introduce su nombre: ");
+		String nombre=s.nextLine();
+		
+		do {
+			System.out.println("Introduce su rol");
+			rol=s.nextLine();
+		}while(!rol.equals("Admin") && !rol.equals("Comprador"));
+		
+		return new PersonaDTO(null,nombre,rol);
+	}
+
+	public static void menuAdmin() {
+		System.out.println("MENU ADMIN");
+		System.out.println("1.Ver todos los tickets");
+		System.out.println("2.Ver todos los usuarios");
+		System.out.println("3.Ver todas las frutas");
+		System.out.println("4.Ver usuario por ID");
+		System.out.println("5.Eliminar usuario");
+		System.out.println("6.Registrar nuevo usuario(admin o comprador)");
+		System.out.println("7.Insertar nueva fruta");
+		System.out.println("8.Modificar fruta");
+		System.out.println("9.Eliminar fruta");
+		System.out.println("0.Cerrar sesión");
+	}
+	
 	private static void actualizarListas(FrutaDAO frutaDAO, FrutasTicketDAO ftDAO, TicketDAO ticketDAO,
 			PersonaDAO personaDAO) throws SQLException {
 		c.setAutoCommit(false);
-		listaFrutas=frutaDAO.obtenerTodos();
-		listaFrutasTicket=ftDAO.obtenerTodos();
-		listaPersonas=personaDAO.obtenerTodos();
-		listaTicket=ticketDAO.obtenerTodos();
+		listaFrutas = frutaDAO.obtenerTodos();
+		listaFrutasTicket = ftDAO.obtenerTodos();
+		listaPersonas = personaDAO.obtenerTodos();
+		listaTicket = ticketDAO.obtenerTodos();
 		c.commit();
-		
+
 	}
-	
+
 	public static boolean existeUsuario(Integer id) {
 		for (int i = 0; i < listaPersonas.size(); i++) {
 			if (listaPersonas.get(i).getID() == id) {
@@ -193,6 +385,16 @@ public class Menu {
 		return opcion;
 	}
 
+	public static int opcionMenuAdmin() {
+		int opcion = 15;
+		do {
+			menuAdmin();
+			opcion = s.nextInt();
+			s.nextLine();
+		} while (opcion < 0 || opcion > 9);
+		return opcion;
+	}
+
 	public static void showInicioSesion() {
 		System.out.println("MENU INICIO SESION");
 		System.out.println("1.Inicio sesion");
@@ -210,27 +412,16 @@ public class Menu {
 	public static int getTicketLista() {
 		return listaTicket.size();
 	}
+
 	public static int getFrutaTicket() {
 		return listaFrutas.size();
 	}
+
 	public static int getFrutasTicketLista() {
 		return listaFrutasTicket.size();
 	}
+
 	public static int getPersonaLista() {
 		return listaPersonas.size();
-	}
-	public static void menuAdmin() {
-		System.out.println("MENU ADMIN");
-		System.out.println("1.Realizar compra");
-		System.out.println("2.Ver todos tickets");
-		System.out.println("3.Ver todos los usuarios");
-		System.out.println("4.Ver usuario por ID");
-		System.out.println("5.Eliminar usuario");
-		System.out.println("6.Registrar nuevo usuario(admin o comprador)");
-		System.out.println("7.Insertar nueva fruta");
-		System.out.println("8.Modificar cantidad fruta");
-		System.out.println("9.Eliminar fruta");
-		System.out.println("10.Mostrar frutas");
-		System.out.println("0.Cerrar sesión");
 	}
 }

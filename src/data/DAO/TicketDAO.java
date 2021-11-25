@@ -44,9 +44,9 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 	}
 
 
-	public boolean eliminar(TicketDTO t) throws SQLException {
+	public boolean eliminar(Integer id) throws SQLException {
 		PreparedStatement statement = c.prepareStatement("DELETE FROM Ticket WHERE id=?;");
-		statement.setInt(1, t.getId());
+		statement.setInt(1, id);
 
 		if(statement.executeUpdate()!=1) return false;
 		return true;

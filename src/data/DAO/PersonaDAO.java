@@ -36,9 +36,9 @@ public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 		return true;
 	}
 
-	public boolean eliminar(PersonaDTO p) throws SQLException {
+	public boolean eliminar(Integer id) throws SQLException {
 		PreparedStatement statement = c.prepareStatement("DELETE FROM Persona WHERE id=?;");
-		statement.setInt(1, p.getID());
+		statement.setInt(1, id);
 
 		if(statement.executeUpdate()!=1) return false;
 		return true;
