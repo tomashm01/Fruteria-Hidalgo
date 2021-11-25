@@ -23,7 +23,7 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 	
 		PreparedStatement statement = c.prepareStatement("INSERT INTO Ticket values (null,?,?,?,?);");
 		statement.setInt(1, t.getIdPersona());
-		statement.setInt(2, Menu.getFrutaTicket()+1);
+		statement.setInt(2, t.getIdFrutas());
 		statement.setDate(3, t.getFecha());
 		statement.setFloat(4, t.getPrecioTotal());
 		

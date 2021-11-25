@@ -37,8 +37,10 @@ public class Menu {
 		int numFrutasComprar=0;
 		Date fecha = new Date(System.currentTimeMillis());
 		Integer id = null;
+		Integer idTicket=null;
+		Integer idFrutasTicket=null;
 		Integer cantidadFruta = null;
-
+		float precioFinal=0;
 		PersonaDTO persona = null;
 		TicketDTO ticket = null;
 		FrutaDTO fruta = null;
@@ -55,6 +57,7 @@ public class Menu {
 				listaPersonas = personaDAO.obtenerTodos();
 				if (existeUsuario(id)) {
 					System.out.println("Login correcto");
+					precioFinal=0;
 					persona=personaDAO.obtenerUno(id);
 					bandera = true;
 				} else {
@@ -83,6 +86,7 @@ public class Menu {
 
 		if (rol.equals("Comprador")) { // MENU LOGIN COMPRADOR
 			do {
+				actualizarListas(frutaDAO,ftDAO,ticketDAO,personaDAO);
 				opcion = opcionMenuComprador();
 				switch (opcion) {
 				case 0:
@@ -97,15 +101,27 @@ public class Menu {
 					cantidadFruta=s.nextInt();
 					s.nextLine();
 					
+					//Actualizar listas
+					if((listaFrutasTicket.size()!=0 && listaTicket.size()!=0)) {
+						idFrutasTicket=listaFrutasTicket.get(listaFrutasTicket.size()-1).getId()+1;
+						idTicket=listaTicket.get(listaTicket.size()-1).getId()+1;
+					}else {
+						idFrutasTicket=1;
+						idTicket=1;
+					}
+					
 					if((fruta=frutaDAO.obtenerUno(id))!=null) {//Existe fruta
 						if((fruta.getCantidad()-cantidadFruta)>0) { //Hay cantidad suficiente
-							
+							ftDAO.insertar(new FrutasTicketDTO(idFrutasTicket,idTicket,fruta.getId()));
+							frutaDAO.modificar(new FrutaDTO(fruta.getId(),fruta.getNombre(),fruta.getCantidad()-cantidadFruta,fruta.getPrecioUnidad()));
+							precioFinal+=(cantidadFruta*fruta.getPrecioUnidad());
 						}else {
 							System.out.println("No queda dicha cantidad ");
 						}
 					}else {
 						System.out.println("No existe dicho ID de fruta");
 					}
+					
 					break;
 				case 2: // Mostrar todas las frutas
 					listaFrutas = frutaDAO.obtenerTodos();
@@ -115,11 +131,25 @@ public class Menu {
 					break;
 				}
 			} while (!bandera);
+			ticketDAO.insertar(new TicketDTO(idTicket,persona.getID(),idFrutasTicket,fecha,precioFinal));
 		} else if (rol.equals("Admin")) { // MENU LOGIN ADMIN
 			System.out.println("admin");
 		}
+		
+		
 	}
 
+	private static void actualizarListas(FrutaDAO frutaDAO, FrutasTicketDAO ftDAO, TicketDAO ticketDAO,
+			PersonaDAO personaDAO) throws SQLException {
+		c.setAutoCommit(false);
+		listaFrutas=frutaDAO.obtenerTodos();
+		listaFrutasTicket=ftDAO.obtenerTodos();
+		listaPersonas=personaDAO.obtenerTodos();
+		listaTicket=ticketDAO.obtenerTodos();
+		c.commit();
+		
+	}
+	
 	public static boolean existeUsuario(Integer id) {
 		for (int i = 0; i < listaPersonas.size(); i++) {
 			if (listaPersonas.get(i).getID() == id) {
