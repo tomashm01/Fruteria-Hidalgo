@@ -160,7 +160,7 @@ public class Menu {
 					}
 				} while (!bandera);
 
-				if(persona!=null) {
+				if(persona!=null && idTicket!=null && idFrutasTicket!=null) {
 					ticketDAO.insertar(new TicketDTO(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal));
 				}
 				
