@@ -10,7 +10,7 @@ import data.DTO.FrutaDTO;
 
 public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	
-	static final Conexion con= new Conexion();
+	static final Conexion con= Conexion.getInstance();
 	static final Connection c=con.conectar();
 	
 	/**
@@ -36,9 +36,10 @@ public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 		statement.setString(1, f.getNombre());
 		statement.setInt(2, f.getCantidad());
 		statement.setFloat(3, f.getPrecioUnidad());
-
+		
 		if(statement.executeUpdate()!=1) return false;
 		return true;
+		
 	}
 
 	/**

@@ -10,7 +10,7 @@ import data.DTO.FrutasTicketDTO;
 
 public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 	
-	static final Conexion con= new Conexion();
+	static final Conexion con= Conexion.getInstance();
 	static final Connection c=con.conectar();
 
 	/**

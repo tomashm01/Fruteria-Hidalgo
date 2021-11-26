@@ -9,7 +9,8 @@ import data.Conexion;
 import data.DTO.TicketDTO;
 
 public class TicketDAO implements DAO<TicketDTO,Integer>{
-	static final Conexion con= new Conexion();
+	
+	static final Conexion con= Conexion.getInstance();
 	static final Connection c=con.conectar();
 	
 	/**
