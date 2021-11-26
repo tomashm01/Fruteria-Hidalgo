@@ -18,17 +18,17 @@ import data.DTO.TicketDTO;
 
 public class Menu {
 
-	static final Conexion con = Conexion.getInstance();
-	static final Connection c = con.conectar();
-	static Scanner s = new Scanner(System.in);
+	private static final Conexion con = Conexion.getInstance();
+	private static final Connection c = con.conectar();
+	private static Scanner s = new Scanner(System.in);
 
-	static boolean bandera = false;
-	static String rol = "";
+	private static boolean bandera = false;
+	private static String rol = "";
 
-	static ArrayList<PersonaDTO> listaPersonas = new ArrayList<PersonaDTO>();
-	static ArrayList<TicketDTO> listaTicket = new ArrayList<TicketDTO>();
-	static ArrayList<FrutaDTO> listaFrutas = new ArrayList<FrutaDTO>();
-	static ArrayList<FrutasTicketDTO> listaFrutasTicket = new ArrayList<FrutasTicketDTO>();
+	private static ArrayList<PersonaDTO> listaPersonas = new ArrayList<PersonaDTO>();
+	private static ArrayList<TicketDTO> listaTicket = new ArrayList<TicketDTO>();
+	private static ArrayList<FrutaDTO> listaFrutas = new ArrayList<FrutaDTO>();
+	private static ArrayList<FrutasTicketDTO> listaFrutasTicket = new ArrayList<FrutasTicketDTO>();
 
 	public static void main(String[] args) throws SQLException {
 
