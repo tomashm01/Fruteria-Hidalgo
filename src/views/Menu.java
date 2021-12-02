@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 import data.Conexion;
@@ -82,7 +83,8 @@ public class Menu {
 				"Eliminar usuario", "Registrar usuario", "Registrar fruta", "Modificar fruta", "Eliminar fruta",
 				"Salir" };
 		String arrayComprador[] = { "Añadir fruta al carrito", "Mostrar frutas","Deshacer cambios", "Salir" };
-
+		String bbdd[]= {"Con datos","Sin datos"};
+		
 		Date fecha = new Date(System.currentTimeMillis());
 		float precioFinal = 0;
 
@@ -96,6 +98,31 @@ public class Menu {
 		try (PreparedStatement statement = c.prepareStatement("SET GLOBAL FOREIGN_KEY_CHECKS=0;");) {
 			statement.executeQuery();
 
+			do {
+				
+				Menu bd=new Menu("Quieres BBDD con o sin datos? ",bbdd);
+				bd.insertarOpcion();
+				
+				switch(bd.getOpcion()) {
+				
+					case 1:	//No borrar datos
+						
+						salir=true;
+						break;
+						
+					case 2: //Borrar datos
+						
+						PreparedStatement st = c.prepareStatement("TRUNCATE TABLE Ticket");
+						st.executeUpdate();
+						st = c.prepareStatement("TRUNCATE TABLE FrutasTicket");
+						st.executeUpdate();
+						salir=true;
+						break;
+						
+				}
+			}while(!salir);
+			salir=false;
+			
 			do { // MENU INICIO SESION
 
 				Menu inicio = new Menu("MENU DE SESIÓN", arrayInicio);
