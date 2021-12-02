@@ -81,7 +81,7 @@ public class Menu {
 				"Eliminar usuario", "Registrar usuario", "Registrar fruta", "Modificar fruta", "Eliminar fruta",
 				"Salir" };
 		String arrayComprador[] = { "Añadir fruta al carrito", "Mostrar frutas","Deshacer cambios", "Salir" };
-		String bbdd[]= {"Con datos","Sin datos"};
+		
 		
 		Date fecha = new Date(System.currentTimeMillis());
 		float precioFinal = 0;
@@ -95,31 +95,9 @@ public class Menu {
 		FrutaDTO fruta = null;
 		try (PreparedStatement statement = c.prepareStatement("SET GLOBAL FOREIGN_KEY_CHECKS=0;");) {
 			statement.executeQuery();
-			do {
-				
-				Menu bd=new Menu("Quieres BBDD con o sin datos? ",bbdd);
-				bd.insertarOpcion();
-				
-				switch(bd.getOpcion()) {
-				
-					case 1:	//No borrar datos
-						
-						salir=true;
-						break;
-						
-					case 2: //Borrar datos
-						
-						PreparedStatement st = c.prepareStatement("TRUNCATE TABLE Ticket");
-						st.executeUpdate();
-						st = c.prepareStatement("TRUNCATE TABLE FrutasTicket");
-						st.executeUpdate();
-						
-						salir=true;
-						break;
-						
-				}
-			}while(!salir);
 			
+			//CARGAR BBDD
+			salir=cargarBBDD();
 			salir=false;
 			
 			do { // MENU INICIO SESION
@@ -175,7 +153,6 @@ public class Menu {
 					break;
 				}
 			} while (!salir);
-			
 			salir = false;
 			
 			if (rol.equals("Comprador")) { // MENU LOGIN COMPRADOR
@@ -385,6 +362,38 @@ public class Menu {
 			System.out.println("Código del Error: " + e.getErrorCode());
 		}
 
+	}
+
+	public static boolean cargarBBDD() throws SQLException {
+		String bbdd[]= {"Con datos","Sin datos"};
+		
+		do {
+			
+			Menu bd=new Menu("Quieres BBDD con o sin datos? ",bbdd);
+			bd.insertarOpcion();
+			
+			switch(bd.getOpcion()) {
+			
+				case 1:	//No borrar datos
+					
+					salir=true;
+					break;
+					
+				case 2: //Borrar datos
+					
+					PreparedStatement st = c.prepareStatement("TRUNCATE TABLE Ticket");
+					st.executeUpdate();
+					st = c.prepareStatement("TRUNCATE TABLE FrutasTicket");
+					st.executeUpdate();
+					
+					salir=true;
+					break;
+					
+			}
+		}while(!salir);
+		
+		return salir;
+		
 	}
 
 	/**
