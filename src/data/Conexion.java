@@ -11,11 +11,15 @@ public class Conexion {
 	 */
 	
 	private static Conexion instance=null;
-	
+	private static Connection conex=null;
 	private static String URL="jdbc:mysql://localhost:3306/FruteriaHidalgo";
 	private static String USER="root";
 	private static String PASSWD="";
-
+	
+	public Conexion() {
+		
+	}
+	
 	/**
 	 * Devuelve la instancia actual
 	 * 
@@ -29,37 +33,33 @@ public class Conexion {
 		return Conexion.instance;
 	}
 	
-	/**
-	 * Establece conexion con la clase Connection 
-	 * 
-	 * @return Connection
-	 */
-	
-	public Connection conectar(boolean autocomit){
-		Connection con=null;
+	public Connection setConexion(boolean commit) {
 		try{			
-			con=DriverManager.getConnection(URL,USER,PASSWD);
-			
-			if(autocomit) {
-				con.setAutoCommit(true);
+			if(commit) {
+				conex.setAutoCommit(true);
 			}else {
-				con.setAutoCommit(false);
+				conex.setAutoCommit(false);
 			}
 			
 		} catch (SQLException e ){
 			e.printStackTrace();
 			return null;
 		}
-		return con;
+		return conex;
 	}
+	
+	/**
+	 * Establece conexion con la clase Connection 
+	 * 
+	 * @return Connection
+	 */
 	public Connection conectar(){
-		Connection con=null;
 		try{			
-			con=DriverManager.getConnection(URL,USER,PASSWD);			
+			conex=DriverManager.getConnection(URL,USER,PASSWD);			
 		} catch (SQLException e ){
 			e.printStackTrace();
 			return null;
 		}
-		return con;
+		return conex;
 	}
 }

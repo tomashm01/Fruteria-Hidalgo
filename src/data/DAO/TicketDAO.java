@@ -11,8 +11,7 @@ import data.Entities.Ticket;
 
 public class TicketDAO implements DAO<TicketDTO,Integer>{
 	
-	static final Conexion con= Conexion.getInstance();
-	static final Connection c=con.conectar();
+	private static Connection c = Conexion.getInstance().conectar();
 	
 	/**
 	 * Constructor vacío
@@ -20,6 +19,18 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 	
 	public TicketDAO() {
 		
+	}
+	
+	/**
+	 * Creo una transaccion
+	 * @throws SQLException 
+	 */
+	
+	public void transaccion(Boolean rollback) throws SQLException {
+		c.setAutoCommit(true);
+		if(rollback) {
+			c.rollback();
+		}
 	}
 	
 	/**
@@ -31,7 +42,7 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 	 */
 	
 	public boolean insertar(TicketDTO t) throws SQLException {
-	
+		
 		PreparedStatement statement = c.prepareStatement("INSERT INTO Ticket values (null,?,?,?,?);");
 		
 		statement.setInt(1, t.getIdPersona());

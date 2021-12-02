@@ -11,8 +11,7 @@ import data.Entities.Persona;
 
 public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 	
-	static final Conexion con= Conexion.getInstance();
-	static final Connection c=con.conectar();
+	private static Connection c = Conexion.getInstance().conectar();
 	
 	/**
 	 * Constructor vacío
@@ -20,6 +19,18 @@ public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 	
 	public PersonaDAO() {
 		
+	}
+	
+	/**
+	 * Creo una transaccion
+	 * @throws SQLException 
+	 */
+	
+	public void transaccion(Boolean rollback) throws SQLException {
+		c.setAutoCommit(true);
+		if(rollback) {
+			c.rollback();
+		}
 	}
 	
 	/**

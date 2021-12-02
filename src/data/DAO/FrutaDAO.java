@@ -11,8 +11,7 @@ import data.Entities.Fruta;
 
 public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	
-	static final Conexion con= Conexion.getInstance();
-	static final Connection c=con.conectar();
+	private static Connection c = Conexion.getInstance().conectar();
 	
 	/**
 	 * Constructor vacío
@@ -20,6 +19,20 @@ public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	
 	public FrutaDAO() {
 		
+	}
+	
+	/**
+	 * Creo una transaccion
+	 * @throws SQLException 
+	 */
+	
+	public void transaccion(Boolean rollback) throws SQLException {
+		c.setAutoCommit(false);
+		if(rollback) {
+			c.rollback();
+		}else {
+			c.commit();
+		}
 	}
 	
 	/**

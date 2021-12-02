@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 import data.Conexion;
@@ -28,8 +27,7 @@ public class Menu {
 	private String titulo;
 	
 	public static String nombreBBDD="";
-	private static Conexion con = Conexion.getInstance();
-	private static Connection c = con.conectar();
+	private static Connection c = Conexion.getInstance().conectar();
 	private static Scanner s = new Scanner(System.in);
 
 	private static boolean salir = false;
@@ -116,12 +114,15 @@ public class Menu {
 						st.executeUpdate();
 						st = c.prepareStatement("TRUNCATE TABLE FrutasTicket");
 						st.executeUpdate();
+						
 						salir=true;
 						break;
 						
 				}
 			}while(!salir);
+			
 			salir=false;
+			c=Conexion.getInstance().setConexion(true);
 			
 			do { // MENU INICIO SESION
 
@@ -178,7 +179,7 @@ public class Menu {
 			} while (!salir);
 			
 			salir = false;
-			c=Conexion.getInstance().conectar(false);
+			c=Conexion.getInstance().setConexion(false);
 			
 			if (rol.equals("Comprador")) { // MENU LOGIN COMPRADOR
 				do {
@@ -235,15 +236,15 @@ public class Menu {
 						break;
 					case 3:// DESHACER CAMBIOS
 						
-						c.rollback();
+						//c.rollback();
 						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 						
 						break;
 
 					case 4:// SALIR
 
-						c.commit();
-						c=Conexion.getInstance().conectar(true);
+						//c.commit();
+						//c=Conexion.getInstance().setConexion(true);
 						System.out.println("Hasta luego!");
 						salir = true;
 
@@ -251,6 +252,7 @@ public class Menu {
 					}
 				} while (!salir);
 				
+				c=Conexion.getInstance().setConexion(true);
 				if (persona != null && idTicket != null && idFrutasTicket != null) {
 					ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal)));
 				}
@@ -258,7 +260,6 @@ public class Menu {
 			} else if (rol.equals("Admin")) { // MENU LOGIN ADMIN
 				do {
 					
-					c=Conexion.getInstance().conectar(true);
 					actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 					Menu admin = new Menu("MENU DE ADMINISTRADOR", arrayAdmin);
 					admin.insertarOpcion();
@@ -473,14 +474,10 @@ public class Menu {
 	private static void actualizarListas(FrutaDAO frutaDAO, FrutasTicketDAO ftDAO, TicketDAO ticketDAO,
 			PersonaDAO personaDAO) throws SQLException {
 
-		c.setAutoCommit(false);
-
 		listaFrutas = frutaDAO.obtenerTodos();
 		listaFrutasTicket = ftDAO.obtenerTodos();
 		listaPersonas = personaDAO.obtenerTodos();
 		listaTicket = ticketDAO.obtenerTodos();
-
-		c.commit();
 
 	}
 

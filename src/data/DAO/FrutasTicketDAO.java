@@ -11,8 +11,7 @@ import data.Entities.FrutasTicket;
 
 public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 	
-	static final Conexion con= Conexion.getInstance();
-	static final Connection c=con.conectar();
+	private static Connection c = Conexion.getInstance().conectar();
 
 	/**
 	 * Constructor vacío
@@ -20,6 +19,20 @@ public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 	
 	public FrutasTicketDAO() {
 		
+	}
+	
+	/**
+	 * Creo una transaccion
+	 * @throws SQLException 
+	 */
+	
+	public void transaccion(Boolean rollback) throws SQLException {
+		c.setAutoCommit(false);
+		if(rollback) {
+			c.rollback();
+		}else {
+			c.commit();
+		}
 	}
 	
 	/**
@@ -33,11 +46,10 @@ public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 	public boolean insertar(FrutasTicketDTO f) throws SQLException {
 		
 		PreparedStatement statement = c.prepareStatement("INSERT INTO FrutasTicket values (?,?,?);");
-		
 		statement.setInt(1, f.getId());
 		statement.setInt(2,f.getIdTicket());
 		statement.setInt(3,f.getIdFruta());
-
+		
 		if(statement.executeUpdate()!=1) return false;
 		return true;
 	}
