@@ -48,6 +48,3 @@ Una vez registrados, según el rol que tengamos(Administrador o comprador) tendr
 - Menu comprador: aquí el usuario solo puede añadir frutas al carrito y mostrar las frutas disponibles con su cantidad y precio.
 
 - Menu administrador: aquí el usuario administrador puede realizar diversas operaciones que no puede realizar el comprador(como crear usuarios administrador, modificar frutas,eliminar usuarios...)
-
-
-

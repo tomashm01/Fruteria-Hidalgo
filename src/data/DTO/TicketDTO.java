@@ -2,6 +2,8 @@ package data.DTO;
 
 import java.sql.Date;
 
+import data.Entities.Ticket;
+
 public class TicketDTO {
 
 	private Integer id;
@@ -10,12 +12,12 @@ public class TicketDTO {
 	private int idPersona;
 	private int idFrutas;
 
-	public TicketDTO(Integer id,int idPersona,int idFrutas, Date fecha,float precioTotal) {
-		setId(id);
-		this.idPersona=idPersona;
-		this.idFrutas=idFrutas;
-		setPrecioTotal(precioTotal);
-		setFecha(fecha);
+	public TicketDTO(Ticket t) {
+		setId(t.getId());
+		this.idPersona=t.getIdPersona();
+		this.idFrutas=t.getIdFrutas();
+		setPrecioTotal(t.getPrecioTotal());
+		setFecha(t.getFecha());
 	}
 
 	public Integer getId() {

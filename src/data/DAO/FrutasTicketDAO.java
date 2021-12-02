@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import data.Conexion;
 import data.DTO.FrutasTicketDTO;
+import data.Entities.FrutasTicket;
 
 public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 	
@@ -93,7 +94,7 @@ public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 		ResultSet rs=statement.executeQuery();
 		
 		while(rs.next()) {
-			lista.add(new FrutasTicketDTO(rs.getInt("id"),rs.getInt("idTicket"),rs.getInt("idFruta")));
+			lista.add(new FrutasTicketDTO(new FrutasTicket(rs.getInt("id"),rs.getInt("idTicket"),rs.getInt("idFruta"))));
 		}
 		
 		return lista;
@@ -114,7 +115,7 @@ public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 		ResultSet rs=statement.executeQuery();
 		
 		if(rs.next()) {
-			return new FrutasTicketDTO(rs.getInt("id"),rs.getInt("idTicket"),rs.getInt("idFruta"));
+			return new FrutasTicketDTO(new FrutasTicket(rs.getInt("id"),rs.getInt("idTicket"),rs.getInt("idFruta")));
 		}
 		
 		return null;

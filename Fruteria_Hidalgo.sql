@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-11-2021 a las 21:49:26
+-- Tiempo de generación: 26-11-2021 a las 12:52:26
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 7.4.23
 
@@ -39,10 +39,10 @@ CREATE TABLE `Fruta` (
 --
 
 INSERT INTO `Fruta` (`id`, `nombre`, `cantidad`, `precioUnidad`) VALUES
-(1, 'Piña', 100, 1.22),
-(2, 'Manzana', 143, 0.42),
-(4, 'Pera', 167, 0.24),
-(5, 'Platano', 360, 0.46),
+(1, 'Piña', 1, 1.22),
+(2, 'Manzana', 142, 0.42),
+(4, 'Pera', 146, 0.24),
+(5, 'Platano', 350, 0.46),
 (6, 'Sandia', 34, 3.65);
 
 -- --------------------------------------------------------
@@ -68,7 +68,15 @@ INSERT INTO `FrutasTicket` (`id`, `idTicket`, `idFruta`) VALUES
 (9, 21, 2),
 (10, 22, 2),
 (11, 23, 2),
-(12, 24, 2);
+(12, 24, 2),
+(13, 25, 5),
+(14, 26, 4),
+(15, 28, 4),
+(16, 29, 1),
+(17, 30, 1),
+(18, 30, 2),
+(19, 30, 4),
+(20, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -91,7 +99,11 @@ INSERT INTO `Persona` (`id`, `nombre`, `rol`) VALUES
 (2, 'Juan', 'Comprador'),
 (3, 'Pedro', 'Comprador'),
 (4, 'Maria', 'Comprador'),
-(6, 'Carla', 'Admin');
+(6, 'Carla', 'Admin'),
+(8, 'Manuel', 'Comprador'),
+(10, 'Maria', 'Comprador'),
+(12, 'Epi', 'Comprador'),
+(13, 'Juanito', 'Comprador');
 
 -- --------------------------------------------------------
 
@@ -119,7 +131,14 @@ INSERT INTO `Ticket` (`id`, `idPersona`, `idFrutas`, `fecha`, `precioTotal`) VAL
 (21, 2, 6, '2021-11-25', 2.1),
 (22, 2, 6, '2021-11-25', 4.2),
 (23, 2, 6, '2021-11-25', 2.1),
-(24, 2, 12, '2021-11-25', 4.2);
+(24, 2, 12, '2021-11-25', 4.2),
+(25, 2, 13, '2021-11-26', 4.6),
+(26, 2, 14, '2021-11-26', 2.4),
+(27, 2, 15, '2021-11-26', 0),
+(28, 4, 15, '2021-11-26', 2.4),
+(29, 3, 16, '2021-11-26', 12.2),
+(30, 2, 19, '2021-11-26', 1.88),
+(31, 2, 21, '2021-11-26', 107.36);
 
 --
 -- Índices para tablas volcadas
@@ -167,19 +186,19 @@ ALTER TABLE `Fruta`
 -- AUTO_INCREMENT de la tabla `FrutasTicket`
 --
 ALTER TABLE `FrutasTicket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `Persona`
 --
 ALTER TABLE `Persona`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `Ticket`
 --
 ALTER TABLE `Ticket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Restricciones para tablas volcadas

@@ -12,9 +12,9 @@ public class Conexion {
 	
 	private static Conexion instance=null;
 	
-	private final String URL="jdbc:mysql://localhost:3306/Fruteria Hidalgo";
-	private final String USER="root";
-	private final String PASSWD="";
+	private static String URL="jdbc:mysql://localhost:3306/FruteriaHidalgo";
+	private static String USER="root";
+	private static String PASSWD="";
 
 	/**
 	 * Devuelve la instancia actual
@@ -35,10 +35,27 @@ public class Conexion {
 	 * @return Connection
 	 */
 	
-	public Connection conectar(){
+	public Connection conectar(boolean autocomit){
 		Connection con=null;
 		try{			
 			con=DriverManager.getConnection(URL,USER,PASSWD);
+			
+			if(autocomit) {
+				con.setAutoCommit(true);
+			}else {
+				con.setAutoCommit(false);
+			}
+			
+		} catch (SQLException e ){
+			e.printStackTrace();
+			return null;
+		}
+		return con;
+	}
+	public Connection conectar(){
+		Connection con=null;
+		try{			
+			con=DriverManager.getConnection(URL,USER,PASSWD);			
 		} catch (SQLException e ){
 			e.printStackTrace();
 			return null;

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import data.Conexion;
 import data.DTO.FrutaDTO;
+import data.Entities.Fruta;
 
 public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	
@@ -30,7 +31,7 @@ public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 	 */
 	
 	public boolean insertar(FrutaDTO f) throws SQLException {
-		
+
 		PreparedStatement statement = c.prepareStatement("INSERT INTO Fruta values (null,?,?,?);");
 		
 		statement.setString(1, f.getNombre());
@@ -95,7 +96,7 @@ public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 		ResultSet rs=statement.executeQuery();
 		
 		while(rs.next()) {
-			lista.add(new FrutaDTO(rs.getInt("id"),rs.getString("nombre"),rs.getInt("cantidad"),rs.getFloat("precioUnidad")));
+			lista.add(new FrutaDTO(new Fruta(rs.getInt("id"),rs.getString("nombre"),rs.getInt("cantidad"),rs.getFloat("precioUnidad"))));
 		}
 		
 		return lista;
@@ -116,7 +117,7 @@ public class FrutaDAO implements DAO<FrutaDTO,Integer>{
 		ResultSet rs=statement.executeQuery();
 		
 		if(rs.next()) {
-			return new FrutaDTO(rs.getInt("id"),rs.getString("nombre"),rs.getInt("cantidad"),rs.getFloat("precioUnidad"));
+			return new FrutaDTO(new Fruta(rs.getInt("id"),rs.getString("nombre"),rs.getInt("cantidad"),rs.getFloat("precioUnidad")));
 		}
 		
 		return null;

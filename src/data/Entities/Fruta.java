@@ -2,23 +2,23 @@ package data.Entities;
 
 public class Fruta {
 
-	private int id;
+	private Integer id;
 	private String nombre;
 	private int cantidad;
 	private float precioUnidad;
 	
 	
-	public Fruta(int id,String nombre,int cantidad,float precioUnidad) {
+	public Fruta(Integer id,String nombre,int cantidad,float precioUnidad) {
 		setId(id);
 		setCantidad(cantidad);
 		setNombre(nombre);
 		setPrecioUnidad(precioUnidad);
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getNombre() {

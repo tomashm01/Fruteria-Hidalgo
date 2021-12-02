@@ -1,5 +1,7 @@
 package data.DTO;
 
+import data.Entities.Fruta;
+
 public class FrutaDTO {
 
 	private Integer id;
@@ -7,11 +9,11 @@ public class FrutaDTO {
 	private int cantidad;
 	private float precioUnidad;
 
-	public FrutaDTO(Integer id, String nombre, int cantidad, float precioUnidad) {
-		setId(id);
-		setCantidad(cantidad);
-		setNombre(nombre);
-		setPrecioUnidad(precioUnidad);
+	public FrutaDTO(Fruta f) {
+		setId(f.getId());
+		setCantidad(f.getCantidad());
+		setNombre(f.getNombre());
+		setPrecioUnidad(f.getPrecioUnidad());
 	}
 
 	public Integer getId() {

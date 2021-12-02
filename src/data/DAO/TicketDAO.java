@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import data.Conexion;
 import data.DTO.TicketDTO;
+import data.Entities.Ticket;
 
 public class TicketDAO implements DAO<TicketDTO,Integer>{
 	
@@ -96,7 +97,7 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 		ResultSet rs=statement.executeQuery();
 		
 		while(rs.next()) {
-			lista.add(new TicketDTO(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal")));
+			lista.add(new TicketDTO(new Ticket(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal"))));
 		}
 		
 		return lista;
@@ -117,7 +118,7 @@ public class TicketDAO implements DAO<TicketDTO,Integer>{
 		ResultSet rs=statement.executeQuery();
 		
 		if(rs.next()) {
-			return new TicketDTO(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal"));
+			return new TicketDTO(new Ticket(rs.getInt("id"),rs.getInt("idPersona"),rs.getInt("idFrutas"),rs.getDate("fecha"),rs.getFloat("precioTotal")));
 		}
 		
 		return null;

@@ -5,7 +5,7 @@ public class Persona {
 	private String nombre;
 	private String rol;
 
-	public Persona(int id, String nombre, String rol) {
+	public Persona(Integer id, String nombre, String rol) {
 		this.id=id;
 		setNombre(nombre);
 		setRol(rol);

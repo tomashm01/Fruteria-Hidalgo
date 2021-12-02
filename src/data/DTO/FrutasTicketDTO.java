@@ -1,14 +1,16 @@
 package data.DTO;
 
+import data.Entities.FrutasTicket;
+
 public class FrutasTicketDTO {
 	private Integer id;
 	private Integer idTicket;
 	private Integer idFruta;
 	
-	public FrutasTicketDTO(Integer id,Integer idTicket,Integer idFruta) {
-		setId(id);
-		setIdFruta(idFruta);
-		setIdTicket(idTicket);
+	public FrutasTicketDTO(FrutasTicket ft) {
+		setId(ft.getId());
+		setIdFruta(ft.getIdFruta());
+		setIdTicket(ft.getIdTicket());
 	}
 	
 	public Integer getId() {

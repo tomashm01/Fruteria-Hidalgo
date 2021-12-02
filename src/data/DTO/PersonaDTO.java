@@ -1,14 +1,16 @@
 package data.DTO;
 
+import data.Entities.Persona;
+
 public class PersonaDTO {
 	private Integer id;
 	private String nombre;
 	private String rol;
 	
-	public PersonaDTO(Integer id, String nombre, String rol) {
-		this.id=id;
-		setNombre(nombre);
-		setRol(rol);
+	public PersonaDTO(Persona p) {
+		this.id=p.getID();
+		setNombre(p.getNombre());
+		setRol(p.getRol());
 	}
 
 	public Integer getID() {

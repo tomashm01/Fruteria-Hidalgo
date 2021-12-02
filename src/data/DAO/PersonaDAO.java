@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import data.Conexion;
 import data.DTO.PersonaDTO;
+import data.Entities.Persona;
 
 public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 	
@@ -92,7 +93,7 @@ public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 		ResultSet rs=statement.executeQuery();
 		
 		while(rs.next()) {
-			lista.add(new PersonaDTO(rs.getInt("id"),rs.getString("nombre"),rs.getString("rol")));
+			lista.add(new PersonaDTO(new Persona(rs.getInt("id"),rs.getString("nombre"),rs.getString("rol"))));
 		}
 		
 		return lista;
@@ -113,7 +114,7 @@ public class PersonaDAO implements DAO<PersonaDTO,Integer> {
 		ResultSet rs=statement.executeQuery();
 		
 		if(rs.next()) {
-			return new PersonaDTO(id,rs.getString("nombre"),rs.getString("rol"));
+			return new PersonaDTO(new Persona(id,rs.getString("nombre"),rs.getString("rol")));
 		}
 		
 		return null;

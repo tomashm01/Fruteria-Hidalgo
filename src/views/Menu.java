@@ -15,15 +15,20 @@ import data.DTO.FrutaDTO;
 import data.DTO.FrutasTicketDTO;
 import data.DTO.PersonaDTO;
 import data.DTO.TicketDTO;
+import data.Entities.Fruta;
+import data.Entities.FrutasTicket;
+import data.Entities.Persona;
+import data.Entities.Ticket;
 
 public class Menu {
 
 	private int opcion;
 	private String opciones[] = null;
 	private String titulo;
-
-	private static final Conexion con = Conexion.getInstance();
-	private static final Connection c = con.conectar();
+	
+	public static String nombreBBDD="";
+	private static Conexion con = Conexion.getInstance();
+	private static Connection c = con.conectar();
 	private static Scanner s = new Scanner(System.in);
 
 	private static boolean salir = false;
@@ -73,10 +78,11 @@ public class Menu {
 		FrutasTicketDAO ftDAO = new FrutasTicketDAO();
 
 		String arrayInicio[] = { "Inicio sesión", "Registro de sesión", "Salir" };
-		String arrayAdmin[]= {"Mostrar tickets","Mostrar usuarios","Mostrar frutas","Buscar usuario","Eliminar usuario"
-				,"Registrar usuario","Registrar fruta","Modificar fruta","Eliminar fruta","Salir"};
-		String arrayComprador[]= {"Añadir fruta al carrito","Mostrar frutas","Salir"};
-		
+		String arrayAdmin[] = { "Mostrar tickets", "Mostrar usuarios", "Mostrar frutas", "Buscar usuario",
+				"Eliminar usuario", "Registrar usuario", "Registrar fruta", "Modificar fruta", "Eliminar fruta",
+				"Salir" };
+		String arrayComprador[] = { "Añadir fruta al carrito", "Mostrar frutas","Deshacer cambios", "Salir" };
+
 		Date fecha = new Date(System.currentTimeMillis());
 		float precioFinal = 0;
 
@@ -89,11 +95,12 @@ public class Menu {
 		FrutaDTO fruta = null;
 		try (PreparedStatement statement = c.prepareStatement("SET GLOBAL FOREIGN_KEY_CHECKS=0;");) {
 			statement.executeQuery();
+
 			do { // MENU INICIO SESION
 
 				Menu inicio = new Menu("MENU DE SESIÓN", arrayInicio);
 				inicio.insertarOpcion();
-				
+
 				switch (inicio.getOpcion()) {
 				case 1: // INICIO SESION
 
@@ -115,20 +122,20 @@ public class Menu {
 				case 2: // REGISTRAR USUARIO
 
 					String nombre = registrarSesion();
-					persona = new PersonaDTO(null, nombre, "Comprador");
+					persona = new PersonaDTO(new Persona(null, nombre, "Comprador"));
 					listaPersonas = personaDAO.obtenerTodos();
 
 					if (personaDAO.insertar(persona)) {
 
 						listaPersonas = personaDAO.obtenerTodos();
-						persona = personaDAO.obtenerUno(listaPersonas.get(listaPersonas.size()-1).getID());
+						persona = personaDAO.obtenerUno(listaPersonas.get(listaPersonas.size() - 1).getID());
 
 						salir = true;
 						listaPersonas = personaDAO.obtenerTodos();
-						
+
 						id = persona.getID();
 						rol = persona.getRol();
-						
+
 						System.out.println("Usuario con ID " + id);
 					} else {
 						System.out.println("Usuario no insertado");
@@ -142,7 +149,9 @@ public class Menu {
 					break;
 				}
 			} while (!salir);
+			
 			salir = false;
+			c=Conexion.getInstance().conectar(false);
 			
 			if (rol.equals("Comprador")) { // MENU LOGIN COMPRADOR
 				do {
@@ -174,9 +183,9 @@ public class Menu {
 
 						if ((fruta = frutaDAO.obtenerUno(id)) != null) {// Existe fruta
 							if ((fruta.getCantidad() - cantidadFruta) > 0) { // Hay cantidad suficiente
-								ftDAO.insertar(new FrutasTicketDTO(idFrutasTicket, idTicket, fruta.getId()));
-								frutaDAO.modificar(new FrutaDTO(fruta.getId(), fruta.getNombre(),
-										fruta.getCantidad() - cantidadFruta, fruta.getPrecioUnidad()));
+								ftDAO.insertar(new FrutasTicketDTO(new FrutasTicket(idFrutasTicket, idTicket, fruta.getId())));
+								frutaDAO.modificar(new FrutaDTO(new Fruta(fruta.getId(), fruta.getNombre(),
+										fruta.getCantidad() - cantidadFruta, fruta.getPrecioUnidad())));
 								precioFinal += (cantidadFruta * fruta.getPrecioUnidad());
 							} else {
 								System.out.println("No queda dicha cantidad ");
@@ -188,30 +197,41 @@ public class Menu {
 						break;
 
 					case 2: // MOSTRAR TODAS LAS FRUTAS
-
+						
+						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
+						
 						listaFrutas = frutaDAO.obtenerTodos();
 						for (int i = 0; i < listaFrutas.size(); i++) {
 							System.out.println(listaFrutas.get(i).toString());
 						}
 
 						break;
+					case 3:// DESHACER CAMBIOS
+						
+						c.rollback();
+						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
+						
+						break;
 
-					case 3:// SALIR
+					case 4:// SALIR
 
+						c.commit();
+						c=Conexion.getInstance().conectar(true);
 						System.out.println("Hasta luego!");
 						salir = true;
 
 						break;
 					}
 				} while (!salir);
-
+				
 				if (persona != null && idTicket != null && idFrutasTicket != null) {
-					ticketDAO.insertar(new TicketDTO(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal));
+					ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal)));
 				}
 
 			} else if (rol.equals("Admin")) { // MENU LOGIN ADMIN
 				do {
 					
+					c=Conexion.getInstance().conectar(true);
 					actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 					Menu admin = new Menu("MENU DE ADMINISTRADOR", arrayAdmin);
 					admin.insertarOpcion();
@@ -337,8 +357,11 @@ public class Menu {
 				} while (!salir);
 			}
 			c.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		}
+		catch (SQLException e) {
+			System.out.println("Excepcion SQL: " + e.getMessage());
+			System.out.println("Estado SQL: " + e.getSQLState());
+			System.out.println("Código del Error: " + e.getErrorCode());
 		}
 
 	}
@@ -365,7 +388,7 @@ public class Menu {
 		System.out.println("Introduce el precio por unidad: ");
 		float precioUnidad = s.nextFloat();
 
-		return new FrutaDTO(id, nombre, cantidad, precioUnidad);
+		return new FrutaDTO(new Fruta(id, nombre, cantidad, precioUnidad));
 	}
 
 	/**
@@ -386,7 +409,7 @@ public class Menu {
 		System.out.println("Introduce el precio por unidad: ");
 		float precioUnidad = s.nextFloat();
 
-		return new FrutaDTO(null, nombre, cantidad, precioUnidad);
+		return new FrutaDTO(new Fruta(null, nombre, cantidad, precioUnidad));
 	}
 
 	/**
@@ -407,7 +430,7 @@ public class Menu {
 
 		} while (!rol.equals("Admin") && !rol.equals("Comprador"));
 
-		return new PersonaDTO(null, nombre, rol);
+		return new PersonaDTO(new Persona(null, nombre, rol));
 	}
 
 	/**
@@ -481,7 +504,7 @@ public class Menu {
 
 		return id;
 	}
-	
+
 	// Getters de listas
 
 	public static int getTicketLista() {
