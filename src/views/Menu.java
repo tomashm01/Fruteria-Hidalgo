@@ -95,7 +95,6 @@ public class Menu {
 		FrutaDTO fruta = null;
 		try (PreparedStatement statement = c.prepareStatement("SET GLOBAL FOREIGN_KEY_CHECKS=0;");) {
 			statement.executeQuery();
-
 			do {
 				
 				Menu bd=new Menu("Quieres BBDD con o sin datos? ",bbdd);
@@ -122,7 +121,6 @@ public class Menu {
 			}while(!salir);
 			
 			salir=false;
-			c=Conexion.getInstance().setConexion(true);
 			
 			do { // MENU INICIO SESION
 
@@ -179,7 +177,6 @@ public class Menu {
 			} while (!salir);
 			
 			salir = false;
-			c=Conexion.getInstance().setConexion(false);
 			
 			if (rol.equals("Comprador")) { // MENU LOGIN COMPRADOR
 				do {
@@ -235,16 +232,13 @@ public class Menu {
 
 						break;
 					case 3:// DESHACER CAMBIOS
-						
-						//c.rollback();
+		
 						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 						
 						break;
 
 					case 4:// SALIR
 
-						//c.commit();
-						//c=Conexion.getInstance().setConexion(true);
 						System.out.println("Hasta luego!");
 						salir = true;
 
@@ -252,7 +246,6 @@ public class Menu {
 					}
 				} while (!salir);
 				
-				c=Conexion.getInstance().setConexion(true);
 				if (persona != null && idTicket != null && idFrutasTicket != null) {
 					ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal)));
 				}

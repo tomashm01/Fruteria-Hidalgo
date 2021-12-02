@@ -36,7 +36,7 @@ public class Conexion {
 	public Connection setConexion(boolean commit) {
 		try{			
 			if(commit) {
-				conex.setAutoCommit(true);
+				conex.commit();
 			}else {
 				conex.setAutoCommit(false);
 			}
@@ -55,7 +55,7 @@ public class Conexion {
 	 */
 	public Connection conectar(){
 		try{			
-			conex=DriverManager.getConnection(URL,USER,PASSWD);			
+			conex=DriverManager.getConnection(URL,USER,PASSWD);	
 		} catch (SQLException e ){
 			e.printStackTrace();
 			return null;
