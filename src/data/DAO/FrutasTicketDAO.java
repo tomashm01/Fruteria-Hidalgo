@@ -45,10 +45,9 @@ public class FrutasTicketDAO implements DAO<FrutasTicketDTO,Integer> {
 	
 	public boolean insertar(FrutasTicketDTO f) throws SQLException {
 		
-		PreparedStatement statement = c.prepareStatement("INSERT INTO FrutasTicket values (?,?,?);");
-		statement.setInt(1, f.getId());
-		statement.setInt(2,f.getIdTicket());
-		statement.setInt(3,f.getIdFruta());
+		PreparedStatement statement = c.prepareStatement("INSERT INTO FrutasTicket values (null,?,?);");
+		statement.setInt(1,f.getIdTicket());
+		statement.setInt(2,f.getIdFruta());
 		
 		if(statement.executeUpdate()!=1) return false;
 		return true;

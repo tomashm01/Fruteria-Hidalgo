@@ -94,7 +94,7 @@ public class Menu {
 		PersonaDTO persona = null;
 		FrutaDTO fruta = null;
 		try (PreparedStatement statement = c.prepareStatement("SET GLOBAL FOREIGN_KEY_CHECKS=0;");) {
-			statement.executeQuery();
+			statement.executeUpdate();
 			
 			//CARGAR BBDD
 			salir=cargarBBDD();
@@ -165,7 +165,7 @@ public class Menu {
 					switch (comprador.getOpcion()) {
 
 					case 1:// AÑADIR FRUTA AL TICKET
-
+						
 						System.out.println("Selecciona ID de la fruta: ");
 						id = s.nextInt();
 						s.nextLine();
@@ -173,14 +173,16 @@ public class Menu {
 						System.out.println("Selecciona numero de unidades: ");
 						cantidadFruta = s.nextInt();
 						s.nextLine();
+						
+						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 
 						// ACTUALIZAR LISTAS
 						if ((listaFrutasTicket.size() != 0 && listaTicket.size() != 0)) {
 							idFrutasTicket = listaFrutasTicket.get(listaFrutasTicket.size() - 1).getId() + 1;
 							idTicket = listaTicket.get(listaTicket.size() - 1).getId() + 1;
-						} else {
-							idFrutasTicket = 1;
-							idTicket = 1;
+						}else {
+							idFrutasTicket=1;
+							idTicket=1;
 						}
 
 						if ((fruta = frutaDAO.obtenerUno(id)) != null) {// Existe fruta
@@ -195,7 +197,10 @@ public class Menu {
 						} else {
 							System.out.println("No existe dicho ID de fruta");
 						}
-
+						if (persona != null && idFrutasTicket != null) {
+							ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal)));
+						}
+						
 						break;
 
 					case 2: // MOSTRAR TODAS LAS FRUTAS
@@ -223,9 +228,7 @@ public class Menu {
 					}
 				} while (!salir);
 				
-				if (persona != null && idTicket != null && idFrutasTicket != null) {
-					ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal)));
-				}
+				
 
 			} else if (rol.equals("Admin")) { // MENU LOGIN ADMIN
 				do {
