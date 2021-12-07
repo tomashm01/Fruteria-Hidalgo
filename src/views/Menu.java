@@ -80,7 +80,7 @@ public class Menu {
 		String arrayAdmin[] = { "Mostrar tickets", "Mostrar usuarios", "Mostrar frutas", "Buscar usuario",
 				"Eliminar usuario", "Registrar usuario", "Registrar fruta", "Modificar fruta", "Eliminar fruta",
 				"Salir" };
-		String arrayComprador[] = { "Añadir fruta al carrito", "Mostrar frutas","Deshacer cambios", "Salir" };
+		String arrayComprador[] = { "Añadir fruta al carrito", "Mostrar frutas","Mostrar mi Ticket actual", "Salir" };
 		
 		
 		Date fecha = new Date(System.currentTimeMillis());
@@ -206,16 +206,27 @@ public class Menu {
 					case 2: // MOSTRAR TODAS LAS FRUTAS
 						
 						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
-						
-						listaFrutas = frutaDAO.obtenerTodos();
-						for (int i = 0; i < listaFrutas.size(); i++) {
-							System.out.println(listaFrutas.get(i).toString());
+						if(listaFrutas.size()!=0) {
+							for (int i = 0; i < listaFrutas.size(); i++) {
+								System.out.println(listaFrutas.get(i).toString());
+							}
+						}else {
+							System.out.println("No hay frutas");
 						}
 
 						break;
-					case 3:// DESHACER CAMBIOS
+					case 3:// MOSTRAR TICKET
 		
 						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
+						if(listaTicket.size()!=0) {
+							for(int i=0;i<listaTicket.size();i++) {
+								if(listaTicket.get(i).getIdPersona()==persona.getID()) {
+									System.out.println(listaTicket.get(i).toString());
+								}
+							}
+						}else {
+							System.out.println("No tienes ningun ticket");
+						}
 						
 						break;
 
