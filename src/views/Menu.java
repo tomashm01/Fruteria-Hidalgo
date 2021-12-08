@@ -198,9 +198,9 @@ public class Menu {
 							System.out.println("No existe dicho ID de fruta");
 						}
 						if (persona != null && idFrutasTicket != null) {
-							ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, precioFinal)));
+							ticketDAO.insertar(new TicketDTO(new Ticket(idTicket, persona.getID(), idFrutasTicket, fecha, cantidadFruta * fruta.getPrecioUnidad())));
 						}
-						
+						System.out.println("Te has gastado "+precioFinal+" euros");
 						break;
 
 					case 2: // MOSTRAR TODAS LAS FRUTAS
