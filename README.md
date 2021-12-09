@@ -1,5 +1,16 @@
 # Frutería Hidalgo
 Aplicación que se encarga de gestionar una frutería para dar de alta a clientes y poder gestionar en forma de tickets la entrada y salida de cada fruta de la tienda.
+Para ello esta aplicación me basado en:
+- Diseñar e implementar una aplicación en Java que permita demostrar todo lo aprendido sobre JDBC.
+- Implementar desde la capa de presentación hasta la capa de persistencia.
+- Documentar el SGBD que implemento, para facilitar así su futuro despliegue.
+- Buscar la independencia del almacén de datos implementa el patrón DAO
+- En la interfaz DAO usar Generics
+- Optimizar las sentencias e implementar al menos una transacción
+- Se trabajará sobre un modelo de datos con al menos tres tablas.
+- Usar varios tipos de datos: enteros, decimales, cadenas, fechas, horas...
+- Usar restricciones en los atributos/campos
+- Para facilitar la fase de pruebas de la aplicación, debo de darle al usuario la opción de partir (o no) de una base de datos ya poblada con varias tuplas válidas. Con esta opción eliminaría las tablas si existieran y se volverían a crear con una información representativa del universo de discurso.
 
 ## Requerimientos para el despliegue de la app
 
