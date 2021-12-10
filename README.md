@@ -2,15 +2,21 @@
 Aplicación que se encarga de gestionar una frutería para dar de alta a clientes y poder gestionar en forma de tickets la entrada y salida de cada fruta de la tienda.
 Para ello esta aplicación me basado en:
 - Diseñar e implementar una aplicación en Java que permita demostrar todo lo aprendido sobre JDBC.
+Para ello uso consultas en MySQL y uso los PreparedStatement para aumentar la seguridad de mis datos.
 - Implementar desde la capa de presentación hasta la capa de persistencia.
+Divido en varias carpetas para implementar la capa de negocio y las vistas.
 - Documentar el SGBD que implemento, para facilitar así su futuro despliegue.
-- Buscar la independencia del almacén de datos implementa el patrón DAO
-- En la interfaz DAO usar Generics
-- Optimizar las sentencias e implementar al menos una transacción
+- Buscar la independencia del almacén de datos implementa el patrón DAO.
+Para ello implemento los DTO y sus entidades.
+- En la interfaz DAO usar Generics.
+Creo la interfaz DAO de la que se extiende cada DAO.
+- Optimizar las sentencias e implementar al menos una transacción.
+Realizo un rollback para volver hacia atrás en alguna operación de compra de frutas.
 - Se trabajará sobre un modelo de datos con al menos tres tablas.
 - Usar varios tipos de datos: enteros, decimales, cadenas, fechas, horas...
 - Usar restricciones en los atributos/campos
 - Para facilitar la fase de pruebas de la aplicación, debo de darle al usuario la opción de partir (o no) de una base de datos ya poblada con varias tuplas válidas. Con esta opción eliminaría las tablas si existieran y se volverían a crear con una información representativa del universo de discurso.
+Esta opción es el primer menú que aparece al ejecutar la aplicación.
 
 ## Requerimientos para el despliegue de la app
 
