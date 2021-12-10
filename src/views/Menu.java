@@ -220,12 +220,12 @@ public class Menu {
 						actualizarListas(frutaDAO, ftDAO, ticketDAO, personaDAO);
 						if(listaTicket.size()!=0) {
 							for(int i=0;i<listaTicket.size();i++) {
-								if(listaTicket.get(i).getIdPersona()==persona.getID()) {
+								if((listaTicket.get(i).getIdPersona()==persona.getID())&& (listaTicket.get(i).getFecha()==fecha)) {
 									System.out.println(listaTicket.get(i).toString());
 								}
 							}
 						}else {
-							System.out.println("No tienes ningun ticket");
+							System.out.println("No hay ningun ticket");
 						}
 						
 						break;
@@ -490,11 +490,12 @@ public class Menu {
 	private static void actualizarListas(FrutaDAO frutaDAO, FrutasTicketDAO ftDAO, TicketDAO ticketDAO,
 			PersonaDAO personaDAO) throws SQLException {
 
+		c.setAutoCommit(false);
 		listaFrutas = frutaDAO.obtenerTodos();
 		listaFrutasTicket = ftDAO.obtenerTodos();
 		listaPersonas = personaDAO.obtenerTodos();
 		listaTicket = ticketDAO.obtenerTodos();
-
+		c.commit();
 	}
 
 	/**
